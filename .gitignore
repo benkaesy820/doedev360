@@ -35,3 +35,5 @@ coverage/
 # Uploads (local development)
 uploads/
 temp/
+
+/generated/prisma

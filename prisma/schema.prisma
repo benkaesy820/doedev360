@@ -1,0 +1,190 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==========================================
+// USER & AUTHENTICATION
+// ==========================================
+
+model User {
+  id              Int       @id @default(autoincrement())
+  name            String
+  email           String    @unique
+  phone           String    @unique
+  passwordHash    String    @map("password_hash")
+  role            Role      @default(USER)
+  status          UserStatus @default(PENDING)
+  mediaPermission Boolean   @default(false) @map("media_permission")
+  rejectionCount  Int       @default(0) @map("rejection_count")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  lastLogin       DateTime? @map("last_login")
+
+  // Relations
+  conversations     Conversation[]
+  adminConversations Conversation[] @relation("AdminConversations")
+  sentMessages      Message[]
+  announcements     Announcement[]
+  announcementReads AnnouncementRead[]
+  reports           BusinessReport[]
+  statusHistory     UserStatusHistory[] @relation("UserStatusHistory")
+  statusChanges     UserStatusHistory[] @relation("StatusChangedBy")
+  refreshTokens     RefreshToken[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  token     String   @unique
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("refresh_tokens")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum UserStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
+// ==========================================
+// MESSAGING
+// ==========================================
+
+model Conversation {
+  id            Int       @id @default(autoincrement())
+  userId        Int       @map("user_id")
+  adminId       Int?      @map("admin_id")
+  lastMessageAt DateTime? @map("last_message_at")
+  status        ConversationStatus @default(ACTIVE)
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  admin    User?     @relation("AdminConversations", fields: [adminId], references: [id])
+  messages Message[]
+
+  @@map("conversations")
+}
+
+model Message {
+  id             Int      @id @default(autoincrement())
+  conversationId Int      @map("conversation_id")
+  senderId       Int      @map("sender_id")
+  senderType     SenderType @map("sender_type")
+  messageText    String?  @map("message_text")
+  mediaUrl       String?  @map("media_url")
+  mediaType      String?  @map("media_type")
+  isRead         Boolean  @default(false) @map("is_read")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User         @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+}
+
+enum ConversationStatus {
+  ACTIVE
+  CLOSED
+}
+
+enum SenderType {
+  USER
+  ADMIN
+}
+
+// ==========================================
+// ANNOUNCEMENTS
+// ==========================================
+
+model Announcement {
+  id        Int      @id @default(autoincrement())
+  title     String?
+  content   String
+  createdBy Int      @map("created_by")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  creator User               @relation(fields: [createdBy], references: [id])
+  reads   AnnouncementRead[]
+
+  @@map("announcements")
+}
+
+model AnnouncementRead {
+  id             Int      @id @default(autoincrement())
+  announcementId Int      @map("announcement_id")
+  userId         Int      @map("user_id")
+  readAt         DateTime @default(now()) @map("read_at")
+
+  announcement Announcement @relation(fields: [announcementId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([announcementId, userId])
+  @@map("announcement_reads")
+}
+
+// ==========================================
+// BUSINESS REPORTS
+// ==========================================
+
+model BusinessReport {
+  id                Int          @id @default(autoincrement())
+  userId            Int          @map("user_id")
+  orderId           String?      @map("order_id")
+  paystackReference String?      @map("paystack_reference")
+  momoTransactionId String?      @map("momo_transaction_id")
+  description       String
+  status            ReportStatus @default(PENDING)
+  adminNotes        String?      @map("admin_notes")
+  createdAt         DateTime     @default(now()) @map("created_at")
+  updatedAt         DateTime     @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("business_reports")
+}
+
+enum ReportStatus {
+  PENDING
+  WORKING
+  COMPLETED
+  REJECTED
+}
+
+// ==========================================
+// USER STATUS HISTORY
+// ==========================================
+
+model UserStatusHistory {
+  id         Int        @id @default(autoincrement())
+  userId     Int        @map("user_id")
+  oldStatus  UserStatus? @map("old_status")
+  newStatus  UserStatus @map("new_status")
+  changedBy  Int        @map("changed_by")
+  reason     String?
+  createdAt  DateTime   @default(now()) @map("created_at")
+
+  user    User @relation("UserStatusHistory", fields: [userId], references: [id], onDelete: Cascade)
+  changer User @relation("StatusChangedBy", fields: [changedBy], references: [id])
+
+  @@map("user_status_history")
+}

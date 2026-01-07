@@ -13,29 +13,27 @@ A controlled business-to-customer chat platform where access is gated by admin a
 - **Framework:** Express.js
 - **Real-time:** Socket.io
 - **Database:** PostgreSQL (v14+)
-- **ORM:** Sequelize or Prisma
-- **Authentication:** JWT + bcrypt
+- **ORM:** Prisma
+- **Authentication:** JWT + Argon2
 - **Session Management:** Redis (for Socket.io sessions)
 
 ### Storage & Services
-- **File Storage:** AWS S3 or Cloudinary
-- **CDN:** CloudFront or Cloudinary CDN
-- **Email:** SendGrid or AWS SES
-- **SMS:** Twilio
-- **Push Notifications:** Firebase Cloud Messaging (FCM)
+- **File Storage:** Local filesystem (uploads folder)
+- **Email:** Local SMTP or Nodemailer
+- **Notifications:** In-app notifications via Socket.io
 
 ### Hosting & Infrastructure
-- **Application Server:** Railway, Render, or DigitalOcean App Platform
-- **Database Hosting:** Supabase, Railway, or managed PostgreSQL
-- **Redis:** Redis Cloud or Railway Redis
-- **Environment:** Docker containers (optional but recommended)
+- **Application Server:** Local development server
+- **Database:** Local PostgreSQL
+- **Redis:** Local Redis instance
+- **Environment:** Docker containers (optional)
 
 ### Development Tools
 - **API Testing:** Postman or Thunder Client
-- **Version Control:** Git + GitHub/GitLab
-- **Process Manager:** PM2
-- **Logging:** Winston or Pino
-- **Monitoring:** Sentry (error tracking)
+- **Version Control:** Git + GitHub
+- **Process Manager:** PM2 or Nodemon
+- **Logging:** Pino
+- **Monitoring:** Console logging (local)
 
 ---
 
@@ -433,13 +431,9 @@ A controlled business-to-customer chat platform where access is gated by admin a
 
 **JWT:** JWT_SECRET, JWT_EXPIRES_IN, REFRESH_TOKEN_SECRET, REFRESH_TOKEN_EXPIRES_IN
 
-**AWS S3:** AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, AWS_S3_BUCKET
+**File Uploads:** UPLOAD_DIR, MAX_FILE_SIZE
 
-**SendGrid:** SENDGRID_API_KEY, FROM_EMAIL
-
-**Twilio:** TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER
-
-**Firebase:** FCM_SERVER_KEY
+**Email (optional):** SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, FROM_EMAIL
 
 **Frontend:** FRONTEND_URL
 
@@ -470,42 +464,39 @@ A controlled business-to-customer chat platform where access is gated by admin a
 
 ## Deployment Strategy
 
-### Option 1: Docker + Self-Hosted (Recommended)
-**Docker Compose Services:**
-- **app:** Node.js application on port 5000, production mode, depends on postgres and redis
-- **postgres:** PostgreSQL 14 container with persistent volume
-- **redis:** Redis 6 Alpine with password authentication
+### Local Development
+- Run Node.js server directly with `npm run dev`
+- PostgreSQL and Redis running locally
+- Hot reload with Nodemon
 
-**Estimated Cost:** $10-20/month (VPS hosting)
+### Production (Optional - Docker)
+**Docker Compose Services:**
+- **app:** Node.js application on port 5000
+- **postgres:** PostgreSQL 14 with persistent volume
+- **redis:** Redis 6 with authentication
 
 ---
 
-## Monthly Cost Breakdown (Node.js Stack)
+## Monthly Cost Breakdown
 
-### Minimal Setup (Phase 1 - MVP)
-- **Hosting:** Render/VPS - $10-20
-- **Database:** PostgreSQL (included) - $0
-- **Redis:** (included) - $0
-- **Storage:** S3 (5GB) - $0.12
-- **Email:** SendGrid (100 emails/day free) - $0
-- **SMS:** Twilio (pay as you go) - ~$0.01/SMS
-- **Domain:** - $12/year
+### Local Development (Phase 1 - MVP)
+- **Hosting:** Local machine - $0
+- **Database:** Local PostgreSQL - $0
+- **Redis:** Local Redis - $0
+- **Storage:** Local filesystem - $0
 
-**Total: ~$10-25/month**
+**Total: $0**
 
 ---
 
 ### Production Setup (Phase 3+)
-- **Hosting:** Render/VPS - $30-50
-- **Database:** Managed PostgreSQL - $15-30
-- **Redis:** Managed Redis - $10-20
-- **Storage:** S3 (50GB + CDN) - $5-10
-- **Email:** SendGrid (40k emails/month) - $20
-- **SMS:** Twilio - ~$50/month (estimated)
-- **Monitoring:** Sentry - $0-26
-- **Backups:** Automated - $5
+- **Hosting:** VPS - $10-30/month
+- **Database:** PostgreSQL on VPS - included
+- **Redis:** Redis on VPS - included
+- **Storage:** Local or VPS storage - included
+- **Backups:** Manual or scripted - included
 
-**Total: ~$135-211/month**
+**Total: ~$10-30/month**
 
 ---
 
@@ -651,16 +642,8 @@ A controlled business-to-customer chat platform where access is gated by admin a
 **Node.js Ecosystem:**
 - Express.js: https://expressjs.com/
 - Socket.io: https://socket.io/docs/
-- Sequelize: https://sequelize.org/
 - Prisma: https://www.prisma.io/
-
-**Deployment:**
-- Render: https://render.com/
-
-**Services:**
-- SendGrid: https://sendgrid.com/
-- Twilio: https://www.twilio.com/
-- AWS S3: https://aws.amazon.com/s3/
+- Pino Logger: https://getpino.io/
 
 **Learning Resources:**
 - Node.js Best Practices: https://github.com/goldbergyoni/nodebestpractices

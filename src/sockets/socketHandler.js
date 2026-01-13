@@ -109,3 +109,8 @@ export function emitToApprovedUsers(io, event, data) {
 export function emitToConversation(io, conversationId, event, data) {
     io.to(`conversation:${conversationId}`).emit(event, data);
 }
+
+// Emit new message to conversation participants
+export function emitNewMessage(io, conversationId, message) {
+    emitToConversation(io, conversationId, 'new_message', { message });
+}

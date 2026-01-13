@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - EVmessages</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.socket.io/4.8.3/socket.io.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="navigation.css">
+</head>
+<body>
+    <!-- Background Decoration -->
+    <div class="bg-decoration">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-main">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <div class="nav-brand-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <span>EVmessages Admin</span>
+            </a>
+            
+            <div class="nav-menu">
+                <a href="admin.html" class="nav-link active">Dashboard</a>
+                <a href="admin-users.html" class="nav-link">Users</a>
+                <a href="admin-conversations.html" class="nav-link">Conversations</a>
+                <a href="admin-reports.html" class="nav-link">Reports</a>
+            </div>
+            
+            <div class="nav-actions">
+                <div class="nav-user">
+                    <div class="nav-status"></div>
+                    <div class="nav-avatar">A</div>
+                    <span class="nav-user-name" id="navUserName">Admin</span>
+                </div>
+                <div class="nav-dropdown">
+                    <button class="nav-dropdown-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="nav-dropdown-menu">
+                        <a href="#" class="nav-dropdown-item">
+                            <i class="fas fa-cog mr-2"></i>
+                            Settings
+                        </a>
+                        <a href="#" class="nav-dropdown-item" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt mr-2"></i>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="nav-mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="nav-mobile-menu" id="mobileMenu">
+        <div class="nav-mobile-header">
+            <div class="nav-mobile-brand">
+                <div class="nav-brand-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <span>EVmessages Admin</span>
+            </div>
+            <button class="nav-mobile-close" id="mobileClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="nav-mobile-links">
+            <a href="admin.html" class="nav-mobile-link active">Dashboard</a>
+            <a href="admin-users.html" class="nav-mobile-link">Users</a>
+            <a href="admin-conversations.html" class="nav-mobile-link">Conversations</a>
+            <a href="admin-reports.html" class="nav-mobile-link">Reports</a>
+        </div>
+        
+        <div class="nav-mobile-actions">
+            <a href="#" class="btn btn-ghost w-full">Settings</a>
+            <a href="#" id="mobileLogoutBtn" class="btn btn-danger w-full">Logout</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="page-container">
+        <!-- Admin Dashboard -->
+        <div class="fade-in">
+            <!-- Stats Overview -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Total Users</p>
+                                <p id="totalUsers" class="text-2xl font-bold text-gray-900">-</p>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-users text-blue-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Pending</p>
+                                <p id="pendingUsers" class="text-2xl font-bold text-yellow-600">-</p>
+                            </div>
+                            <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-clock text-yellow-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Active Chats</p>
+                                <p id="activeChats" class="text-2xl font-bold text-green-600">-</p>
+                            </div>
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-comments text-green-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Unread</p>
+                                <p id="unreadMessages" class="text-2xl font-bold text-red-600">-</p>
+                            </div>
+                            <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-envelope text-red-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- User Management -->
+                <div class="lg:col-span-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="flex items-center justify-between">
+                                <h3 class="text-xl font-bold text-gray-900 flex items-center">
+                                    <i class="fas fa-users mr-3"></i>
+                                    User Management
+                                </h3>
+                                <div class="flex gap-2">
+                                    <button id="filterAll" class="btn btn-primary btn-sm">All</button>
+                                    <button id="filterPending" class="btn btn-ghost btn-sm">Pending</button>
+                                    <button id="filterApproved" class="btn btn-ghost btn-sm">Approved</button>
+                                    <button id="filterRejected" class="btn btn-ghost btn-sm">Rejected</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="usersList" class="space-y-3">
+                                <div class="text-center py-8">
+                                    <div class="loading-shimmer loading-skeleton mb-4"></div>
+                                    <div class="loading-shimmer loading-skeleton mb-4"></div>
+                                    <div class="loading-shimmer loading-skeleton w-3/4 mx-auto"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Conversations -->
+                    <div class="card mt-6">
+                        <div class="card-header">
+                            <h3 class="text-xl font-bold text-gray-900 flex items-center">
+                                <i class="fas fa-comments mr-3"></i>
+                                Active Conversations
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="conversationsList" class="space-y-3">
+                                <div class="text-center py-8">
+                                    <div class="loading-shimmer loading-skeleton mb-4"></div>
+                                    <div class="loading-shimmer loading-skeleton mb-4"></div>
+                                    <div class="loading-shimmer loading-skeleton w-3/4 mx-auto"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Section -->
+                <div class="lg:col-span-1">
+                    <div class="card">
+                        <div class="chat-container">
+                            <div class="chat-header">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-lg font-bold flex items-center">
+                                        <i class="fas fa-message mr-2"></i>
+                                        Quick Chat
+                                    </h3>
+                                    <div class="w-3 h-3 bg-green-400 rounded-full pulse"></div>
+                                </div>
+                                <p id="currentChatUser" class="text-sm opacity-90">Select a conversation to start chatting</p>
+                            </div>
+                            
+                            <div class="chat-messages" id="messagesContainer">
+                                <div class="text-center text-gray-500 py-8">
+                                    <i class="fas fa-inbox text-4xl mb-4 text-gray-300"></i>
+                                    <p class="text-sm">Select a conversation to view messages</p>
+                                </div>
+                            </div>
+                            
+                            <div class="chat-input-wrapper">
+                                <form id="messageForm" class="flex gap-2">
+                                    <div class="flex-1 form-input-wrapper">
+                                        <i class="fas fa-message form-input-icon"></i>
+                                        <input type="text" id="messageInput" placeholder="Type your message..." 
+                                            class="form-input form-input-with-icon text-sm">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileClose = document.getElementById('mobileClose');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+        
+        mobileClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+        
+        // Close mobile menu when clicking on links
+        const mobileLinks = document.querySelectorAll('.nav-mobile-link');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Dropdown menu
+        const dropdown = document.querySelector('.nav-dropdown');
+        const dropdownToggle = dropdown.querySelector('.nav-dropdown-toggle');
+        
+        dropdownToggle.addEventListener('click', () => {
+            dropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!dropdown.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+    </script>
+    <script src="admin-script.js"></script>
+</body>
+</html>

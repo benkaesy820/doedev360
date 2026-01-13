@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - EVmessages</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="navigation.css">
+</head>
+<body>
+    <!-- Background Decoration -->
+    <div class="bg-decoration">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-main">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <div class="nav-brand-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <span>EVmessages</span>
+            </a>
+            
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="features.html" class="nav-link active">Features</a>
+                <a href="pricing.html" class="nav-link">Pricing</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </div>
+            
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-ghost btn-sm">Sign In</a>
+                <a href="register.html" class="btn btn-primary btn-sm">Get Started</a>
+            </div>
+            
+            <button class="nav-mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="nav-mobile-menu" id="mobileMenu">
+        <div class="nav-mobile-header">
+            <div class="nav-mobile-brand">
+                <div class="nav-brand-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <span>EVmessages</span>
+            </div>
+            <button class="nav-mobile-close" id="mobileClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="nav-mobile-links">
+            <a href="index.html" class="nav-mobile-link">Home</a>
+            <a href="features.html" class="nav-mobile-link active">Features</a>
+            <a href="pricing.html" class="nav-mobile-link">Pricing</a>
+            <a href="about.html" class="nav-mobile-link">About</a>
+            <a href="contact.html" class="nav-mobile-link">Contact</a>
+        </div>
+        
+        <div class="nav-mobile-actions">
+            <a href="login.html" class="btn btn-ghost w-full">Sign In</a>
+            <a href="register.html" class="btn btn-primary w-full">Get Started</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="page-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Powerful Features</h1>
+            <p class="page-subtitle">Everything you need to manage customer communications professionally and efficiently.</p>
+        </div>
+
+        <!-- Core Features -->
+        <section class="page-section">
+            <h2 class="page-section-title">Core Messaging Features</h2>
+            <p class="page-section-description">Essential features that make your customer communication seamless and effective.</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h3 class="feature-title">Admin Approval System</h3>
+                    <p class="feature-description">Control access with admin approval workflow. New users require approval before accessing the chat system, ensuring security and quality control.</p>
+                    <ul class="mt-4 text-sm text-gray-600 space-y-1">
+                        <li>• Pending user management</li>
+                        <li>• One-click approval/rejection</li>
+                        <li>• Rejection history tracking</li>
+                        <li>• Account suspension controls</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="feature-title">Real-time Chat</h3>
+                    <p class="feature-description">One-to-one messaging between customers and admins with instant delivery and typing indicators for smooth conversations.</p>
+                    <ul class="mt-4 text-sm text-gray-600 space-y-1">
+                        <li>• Instant message delivery</li>
+                        <li>• Typing indicators</li>
+                        <li>• Online status display</li>
+                        <li>• Message timestamps</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3 class="feature-title">Conversation History</h3>
+                    <p class="feature-description">Complete message history with timestamps. Never lose context of your customer conversations with full archival support.</p>
+                    <ul class="mt-4 text-sm text-gray-600 space-y-1">
+                        <li>• Complete message logs</li>
+                        <li>• Searchable history</li>
+                        <li>• Message timestamps</li>
+                        <li>• Auto-save conversations</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3 class="feature-title">Broadcast Messages</h3>
+                    <p class="feature-description">Send announcements to all users or specific groups with targeted messaging capabilities for important updates.</p>
+                    <ul class="mt-4 text-sm text-gray-600 space-y-1">
+                        <li>• Mass messaging</li>
+                        <li>• Targeted broadcasts</li>
+                        <li>• Announcement room</li>
+                        <li>• Message scheduling</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced Features -->
+        <section class="page-section">
+            <h2 class="page-section-title">Advanced Features</h2>
+            <p class="page-section-description">Powerful capabilities that take your communication to the next level.</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Security & Privacy</h3>
+                    <p class="feature-description">Enterprise-grade security with JWT authentication and encrypted message transmission to protect your data.</p>
+                    <ul class="mt-4 text-sm text-gray-600 space-y-1">
+                        <li>• JWT authentication</li>
+                        <li>• Encrypted messaging</li>
+                        <li>• Role-based access</li>
+                        <li>• Secure data storage</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Analytics Dashboard</h3>
+                    <p class="feature-description">Track user activity, message metrics, and system performance with real-time analytics and reporting.</p>
+                    <ul class="mt-4 text-sm text-gray-600 space-y-1">
+                        <li>• Real-time metrics</li>
+                        <li>• User activity tracking</li>
+                        <li>• Message statistics</li>
+                        <li>• Performance monitoring</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-photo-video"></i>
+                    </div>
+                    <h3 class="feature-title">Media Sharing</h3>
+                    <p class="feature-description">Share images, videos, and documents with granular admin controls over media permissions.</p>
+                    <ul class="mt-4 text-sm text-gray-600 space-y-1">
+                        <li>• Image sharing</li>
+                        <li>• Video support</li>
+                        <li>• Document exchange</li>
+                        <li>• Admin permission controls</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="feature-title">Auto-close Sessions</h3>
+                    <p class="feature-description">Automatically close inactive chat sessions after 1 hour to manage system resources efficiently.</p>
+                    <ul class="mt-4 text-sm text-gray-600 space-y-1">
+                        <li>• Inactivity detection</li>
+                        <li>• Auto-close notifications</li>
+                        <li>• Session management</li>
+                        <li>• Resource optimization</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Features -->
+        <section class="page-section">
+            <h2 class="page-section-title">Admin Management</h2>
+            <p class="page-section-description">Comprehensive tools for administrators to manage users and monitor communications.</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <h3 class="feature-title">User Management</h3>
+                    <p class="feature-description">Complete control over user accounts with approval workflows, status management, and permission controls.</p>
+                    <ul class="mt-4 text-sm text-gray-600 space-y-1">
+                        <li>• User approval workflow</li>
+                        <li>• Status management</li>
+                        <li>• Permission controls</li>
+                        <li>• Bulk operations</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3 class="feature-title">Message Monitoring</h3>
+                    <p class="feature-description">Monitor all conversations in real-time with comprehensive oversight and intervention capabilities.</p>
+                    <ul class="mt-4 text-sm text-gray-600 space-y-1">
+                        <li>• Real-time monitoring</li>
+                        <li>• Conversation oversight</li>
+                        <li>• Message filtering</li>
+                        <li>• Intervention tools</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Report Management</h3>
+                    <p class="feature-description">Handle user reports and feedback with comprehensive tracking and resolution workflows.</p>
+                    <ul class="mt-4 text-sm text-gray-600 space-y-1">
+                        <li>• Report tracking</li>
+                        <li>• Resolution workflows</li>
+                        <li>• Feedback collection</li>
+                        <li>• Analytics integration</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3 class="feature-title">Notification System</h3>
+                    <p class="feature-description">Smart notifications for admins about new users, messages, and system events requiring attention.</p>
+                    <ul class="mt-4 text-sm text-gray-600 space-y-1">
+                        <li>• Real-time alerts</li>
+                        <li>• Event notifications</li>
+                        <li>• Priority filtering</li>
+                        <li>• Custom alerts</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta">
+            <h2 class="cta-title">Ready to Experience These Features?</h2>
+            <p class="cta-description">Get started today and discover how EVmessages can transform your customer communication.</p>
+            <div class="cta-actions">
+                <a href="register.html" class="cta-btn">
+                    Start Free Trial
+                </a>
+                <a href="contact.html" class="cta-btn cta-btn-secondary">
+                    Schedule Demo
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>EVmessages</h4>
+                <p>Professional business chat system for modern companies. Secure, reliable, and easy to use.</p>
+                <div class="flex gap-4 mt-4">
+                    <a href="#" class="text-white hover:text-primary-300 transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-white hover:text-primary-300 transition-colors">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-white hover:text-primary-300 transition-colors">
+                        <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="pricing.html">Pricing</a></li>
+                    <li><a href="security.html">Security</a></li>
+                    <li><a href="api.html">API</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="careers.html">Careers</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="press.html">Press</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="help.html">Help Center</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="status.html">System Status</a></li>
+                    <li><a href="docs.html">Documentation</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 EVmessages. All rights reserved. | <a href="privacy.html" class="hover:text-white">Privacy Policy</a> | <a href="terms.html" class="hover:text-white">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileClose = document.getElementById('mobileClose');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+        
+        mobileClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+        
+        // Close mobile menu when clicking on links
+        const mobileLinks = document.querySelectorAll('.nav-mobile-link');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

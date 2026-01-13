@@ -12,10 +12,13 @@ const httpServer = createServer(app);
 // Socket.io setup
 const io = new Server(httpServer, {
     cors: {
-        origin: config.frontendUrl,
+        origin: ['http://localhost:3000', 'http://localhost:5000', 'file://'],
         credentials: true
     }
 });
+
+// Make io available to routes
+app.set('io', io);
 
 // Setup socket handlers
 setupSocketHandlers(io);

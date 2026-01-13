@@ -1,20 +1,15 @@
 import { PrismaClient } from '@prisma/client';
-import { PrismaPg } from '@prisma/adapter-pg';
-import pg from 'pg';
 import logger from '../utils/logger.js';
 import config from './index.js';
 
-// Create PostgreSQL connection pool
-const pool = new pg.Pool({
-    connectionString: config.databaseUrl,
-    ssl: config.databaseUrl?.includes('sslmode=require') ? { rejectUnauthorized: false } : undefined
+// Create Prisma client for PostgreSQL
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: config.databaseUrl,
+    },
+  },
 });
-
-// Create Prisma adapter
-const adapter = new PrismaPg(pool);
-
-// Create Prisma client with adapter
-const prisma = new PrismaClient({ adapter });
 
 // Test connection
 export async function connectDatabase() {
@@ -29,7 +24,6 @@ export async function connectDatabase() {
 
 export async function disconnectDatabase() {
     await prisma.$disconnect();
-    await pool.end();
     logger.info('Database disconnected');
 }
 

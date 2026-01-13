@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - EVmessages</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="auth-styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-main">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <div class="nav-brand-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <span>EVmessages</span>
+            </a>
+            
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </div>
+            
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-ghost btn-sm">Sign In</a>
+                <a href="register.html" class="btn btn-primary btn-sm">Get Started</a>
+            </div>
+            
+            <button class="nav-mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="nav-mobile-menu" id="mobileMenu">
+        <div class="nav-mobile-header">
+            <div class="nav-mobile-brand">
+                <div class="nav-brand-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <span>EVmessages</span>
+            </div>
+            <button class="nav-mobile-close" id="mobileClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="nav-mobile-links">
+            <a href="index.html" class="nav-mobile-link">Home</a>
+            <a href="contact.html" class="nav-mobile-link">Contact</a>
+        </div>
+        
+        <div class="nav-mobile-actions">
+            <a href="login.html" class="btn btn-ghost w-full">Sign In</a>
+            <a href="register.html" class="btn btn-primary w-full">Get Started</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="auth-layout">
+        <div class="auth-container">
+            <!-- Left Side - Visual -->
+            <div class="auth-visual">
+                <div class="auth-visual-icon">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <h1 class="auth-visual-title">Create Account</h1>
+                <p class="auth-visual-subtitle">
+                    Join thousands of businesses using EVmessages for professional customer communication
+                </p>
+                <div class="auth-visual-features">
+                    <div class="auth-feature">
+                        <div class="auth-feature-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <span>Quick Setup</span>
+                    </div>
+                    <div class="auth-feature">
+                        <div class="auth-feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <span>Secure</span>
+                    </div>
+                    <div class="auth-feature">
+                        <div class="auth-feature-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <span>Free Trial</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Registration Form -->
+            <div class="auth-card fade-in">
+                <div class="auth-card-header">
+                    <div class="auth-card-header-content">
+                        <div class="auth-card-icon">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div>
+                            <h2 class="auth-card-title">Create Account</h2>
+                            <p class="auth-card-subtitle">Fill in your information to get started</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="auth-card-body">
+                    <form id="registerForm" class="auth-form">
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <div class="form-input-wrapper">
+                                <i class="fas fa-user form-input-icon"></i>
+                                <input type="text" id="regName" required placeholder="Enter your full name" 
+                                    class="form-input">
+                            </div>
+                            <p class="form-help">Enter your legal name as it appears on official documents</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <div class="form-input-wrapper">
+                                <i class="fas fa-envelope form-input-icon"></i>
+                                <input type="email" id="regEmail" required placeholder="your.email@company.com" 
+                                    class="form-input">
+                            </div>
+                            <p class="form-help">We'll use this for account verification</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <div class="form-input-wrapper">
+                                <i class="fas fa-phone form-input-icon"></i>
+                                <input type="tel" id="regPhone" required placeholder="+1 (555) 123-4567" 
+                                    class="form-input">
+                            </div>
+                            <p class="form-help">Include country code for international numbers</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Company Name</label>
+                            <div class="form-input-wrapper">
+                                <i class="fas fa-building form-input-icon"></i>
+                                <input type="text" id="regCompany" placeholder="Your company name" 
+                                    class="form-input">
+                            </div>
+                            <p class="form-help">Optional: helps us provide better support</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <div class="form-input-wrapper">
+                                <i class="fas fa-lock form-input-icon"></i>
+                                <input type="password" id="regPassword" required placeholder="Create a strong password" 
+                                    class="form-input">
+                            </div>
+                            <p class="form-help">Minimum 8 characters with letters and numbers</p>
+                            <div class="password-strength" id="passwordStrength">
+                                <div class="strength-bar">
+                                    <div class="strength-fill" id="strengthFill"></div>
+                                </div>
+                                <span class="strength-text" id="strengthText">Enter password</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Confirm Password</label>
+                            <div class="form-input-wrapper">
+                                <i class="fas fa-lock form-input-icon"></i>
+                                <input type="password" id="regConfirmPassword" required placeholder="Confirm your password" 
+                                    class="form-input">
+                            </div>
+                            <p class="form-help">Re-enter your password to confirm</p>
+                        </div>
+                        
+                        <div class="form-checkbox-wrapper">
+                            <input type="checkbox" id="agreeTerms" class="form-checkbox" required>
+                            <label for="agreeTerms" class="form-checkbox-label">
+                                I agree to the <a href="#" class="help-link">Terms of Service</a> and <a href="#" class="help-link">Privacy Policy</a>
+                            </label>
+                        </div>
+                        
+                        <div class="form-checkbox-wrapper">
+                            <input type="checkbox" id="agreeMarketing" class="form-checkbox">
+                            <label for="agreeMarketing" class="form-checkbox-label">
+                                I agree to receive marketing communications (optional)
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-full btn-lg">
+                            <i class="fas fa-user-plus mr-2"></i>
+                            Create Account
+                        </button>
+                        
+                        <div class="mt-6 text-center">
+                            <p class="text-neutral-600">Already have an account?</p>
+                            <a href="login.html" class="help-link font-semibold">Sign In</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Benefits Section -->
+    <div class="page-container">
+        <div class="help-section">
+            <h3 class="help-title">Why Choose EVmessages?</h3>
+            <div class="help-grid">
+                <div class="help-card">
+                    <div class="help-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h4 class="help-card-title">Secure & Compliant</h4>
+                    <p class="text-neutral-600">Enterprise-grade security with GDPR compliance and data encryption</p>
+                </div>
+                
+                <div class="help-card">
+                    <div class="help-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h4 class="help-card-title">Admin Control</h4>
+                    <p class="text-neutral-600">Complete control over user access and conversation monitoring</p>
+                </div>
+                
+                <div class="help-card">
+                    <div class="help-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4 class="help-card-title">Real-time Analytics</h4>
+                    <p class="text-neutral-600">Track performance and gain insights from customer interactions</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileClose = document.getElementById('mobileClose');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+        
+        mobileClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+        
+        // Close mobile menu when clicking on links
+        const mobileLinks = document.querySelectorAll('.nav-mobile-link');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Password strength indicator
+        const passwordInput = document.getElementById('regPassword');
+        const strengthFill = document.getElementById('strengthFill');
+        const strengthText = document.getElementById('strengthText');
+        
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            const strength = calculatePasswordStrength(password);
+            
+            // Update strength bar
+            strengthFill.style.width = strength.percentage + '%';
+            
+            // Update strength text and color
+            if (password.length === 0) {
+                strengthText.textContent = 'Enter password';
+                strengthText.className = 'strength-text';
+                strengthFill.style.background = 'linear-gradient(to right, var(--error), var(--warning), var(--success))';
+            } else if (strength.score < 2) {
+                strengthText.textContent = 'Weak';
+                strengthText.className = 'strength-text text-red-600';
+                strengthFill.style.background = 'var(--error)';
+            } else if (strength.score < 3) {
+                strengthText.textContent = 'Fair';
+                strengthText.className = 'strength-text text-yellow-600';
+                strengthFill.style.background = 'var(--warning)';
+            } else if (strength.score < 4) {
+                strengthText.textContent = 'Good';
+                strengthText.className = 'strength-text text-blue-600';
+                strengthFill.style.background = 'var(--primary-500)';
+            } else {
+                strengthText.textContent = 'Strong';
+                strengthText.className = 'strength-text text-green-600';
+                strengthFill.style.background = 'var(--success)';
+            }
+        });
+        
+        function calculatePasswordStrength(password) {
+            let score = 0;
+            let feedback = [];
+            
+            // Length check
+            if (password.length >= 8) score++;
+            if (password.length >= 12) score++;
+            
+            // Complexity checks
+            if (/[a-z]/.test(password)) score++; // lowercase
+            if (/[A-Z]/.test(password)) score++; // uppercase
+            if (/[0-9]/.test(password)) score++; // numbers
+            if (/[^a-zA-Z0-9]/.test(password)) score++; // special characters
+            
+            // Calculate percentage
+            const percentage = Math.min((score / 6) * 100, 100);
+            
+            return {
+                score: score,
+                percentage: percentage,
+                feedback: feedback
+            };
+        }
+
+        // Notification function
+        function showNotification(message, type = 'info') {
+            const container = document.getElementById('notificationContainer');
+            const notification = document.createElement('div');
+            
+            const icon = type === 'success' ? 'fa-check-circle' : 
+                         type === 'error' ? 'fa-exclamation-circle' : 
+                         'fa-info-circle';
+            
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas ${icon}"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="font-medium">${message}</p>
+                </div>
+                <button class="notification-close" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            container.appendChild(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideInRight 0.3s ease-out reverse';
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

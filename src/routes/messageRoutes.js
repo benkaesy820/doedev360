@@ -2,6 +2,7 @@ import { Router } from 'express';
 import prisma from '../config/database.js';
 import { authenticate, requireApproved, requireAdmin } from '../middleware/auth.js';
 import { messageSchema } from '../utils/validators.js';
+import { emitNewMessage } from '../sockets/socketHandler.js';
 
 const router = Router();
 
@@ -159,6 +160,12 @@ router.post('/:id/messages', authenticate, requireApproved, async (req, res, nex
             where: { id: conversationId },
             data: { lastMessageAt: new Date() }
         });
+
+        // Emit real-time message to conversation participants
+        const io = req.app.get('io');
+        if (io) {
+            emitNewMessage(io, conversationId, message);
+        }
 
         res.status(201).json({ message });
     } catch (error) {

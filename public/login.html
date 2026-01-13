@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - EVmessages</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="auth-styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-main">
+        <div class="nav-container">
+            <a href="index.html" class="nav-brand">
+                <div class="nav-brand-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <span>EVmessages</span>
+            </a>
+            
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </div>
+            
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-ghost btn-sm">Sign In</a>
+                <a href="register.html" class="btn btn-primary btn-sm">Get Started</a>
+            </div>
+            
+            <button class="nav-mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="nav-mobile-menu" id="mobileMenu">
+        <div class="nav-mobile-header">
+            <div class="nav-mobile-brand">
+                <div class="nav-brand-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <span>EVmessages</span>
+            </div>
+            <button class="nav-mobile-close" id="mobileClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="nav-mobile-links">
+            <a href="index.html" class="nav-mobile-link">Home</a>
+            <a href="contact.html" class="nav-mobile-link">Contact</a>
+        </div>
+        
+        <div class="nav-mobile-actions">
+            <a href="login.html" class="btn btn-ghost w-full">Sign In</a>
+            <a href="register.html" class="btn btn-primary w-full">Get Started</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="auth-layout">
+        <div class="auth-container">
+            <!-- Left Side - Visual -->
+            <div class="auth-visual">
+                <div class="auth-visual-icon">
+                    <i class="fas fa-sign-in-alt"></i>
+                </div>
+                <h1 class="auth-visual-title">Welcome Back</h1>
+                <p class="auth-visual-subtitle">
+                    Sign in to your account to access your EVmessages dashboard and continue your conversations
+                </p>
+                <div class="auth-visual-features">
+                    <div class="auth-feature">
+                        <div class="auth-feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <span>Secure Login</span>
+                    </div>
+                    <div class="auth-feature">
+                        <div class="auth-feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <span>Fast Access</span>
+                    </div>
+                    <div class="auth-feature">
+                        <div class="auth-feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <span>Mobile Ready</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Login Form -->
+            <div class="auth-card fade-in">
+                <div class="auth-card-header">
+                    <div class="auth-card-header-content">
+                        <div class="auth-card-icon">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div>
+                            <h2 class="auth-card-title">Sign In</h2>
+                            <p class="auth-card-subtitle">Enter your credentials to continue</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="auth-card-body">
+                    <form id="loginForm" class="auth-form">
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <div class="form-input-wrapper">
+                                <i class="fas fa-envelope form-input-icon"></i>
+                                <input type="email" id="loginEmail" required placeholder="your.email@company.com" 
+                                    class="form-input">
+                            </div>
+                            <p class="form-help">Enter the email associated with your account</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <div class="form-input-wrapper">
+                                <i class="fas fa-lock form-input-icon"></i>
+                                <input type="password" id="loginPassword" required placeholder="Enter your password" 
+                                    class="form-input">
+                            </div>
+                            <p class="form-help">Enter your secure password</p>
+                            <div class="mt-3">
+                                <a href="#" class="help-link">
+                                    <i class="fas fa-question-circle mr-1"></i>
+                                    Forgot your password?
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="form-checkbox-wrapper">
+                            <input type="checkbox" id="rememberMe" class="form-checkbox">
+                            <label for="rememberMe" class="form-checkbox-label">
+                                Remember me on this device for 30 days
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-full btn-lg">
+                            <i class="fas fa-sign-in-alt mr-2"></i>
+                            Sign In to Account
+                        </button>
+                        
+                        <div class="mt-6 text-center">
+                            <p class="text-neutral-600">Don't have an account?</p>
+                            <a href="register.html" class="help-link font-semibold">Create Account</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Access Section -->
+    <div class="page-container">
+        <div class="quick-access">
+            <h3 class="quick-access-title">Quick Access Demo Accounts</h3>
+            <div class="quick-access-grid">
+                <div class="quick-access-card" onclick="fillAdminCredentials()">
+                    <div class="quick-access-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h4 class="quick-access-title">Admin Demo</h4>
+                    <p class="quick-access-description">Access the admin dashboard to manage users and monitor conversations</p>
+                    <div class="quick-access-credentials">
+                        <p><strong>Email:</strong> admin@example.com</p>
+                        <p><strong>Password:</strong> admin123</p>
+                    </div>
+                    <button class="btn btn-outline btn-full">
+                        <i class="fas fa-key mr-2"></i>
+                        Use Admin Account
+                    </button>
+                </div>
+                
+                <div class="quick-access-card" onclick="fillUserCredentials()">
+                    <div class="quick-access-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h4 class="quick-access-title">User Demo</h4>
+                    <p class="quick-access-description">Access the user dashboard to test chat functionality and messaging</p>
+                    <div class="quick-access-credentials">
+                        <p><strong>Email:</strong> test@example.com</p>
+                        <p><strong>Password:</strong> password123</p>
+                    </div>
+                    <button class="btn btn-outline btn-full">
+                        <i class="fas fa-key mr-2"></i>
+                        Use User Account
+                    </button>
+                </div>
+                
+                <div class="quick-access-card" onclick="fillPendingCredentials()">
+                    <div class="quick-access-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h4 class="quick-access-title">Pending Demo</h4>
+                    <p class="quick-access-description">Test the pending approval workflow and user onboarding experience</p>
+                    <div class="quick-access-credentials">
+                        <p><strong>Email:</strong> pending@example.com</p>
+                        <p><strong>Password:</strong> password123</p>
+                    </div>
+                    <button class="btn btn-outline btn-full">
+                        <i class="fas fa-key mr-2"></i>
+                        Use Pending Account
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help Section -->
+        <div class="help-section">
+            <h3 class="help-title">Need Help?</h3>
+            <div class="help-grid">
+                <div class="help-card">
+                    <div class="help-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h4 class="help-card-title">Frequently Asked Questions</h4>
+                    <ul class="help-list">
+                        <li><a href="#" class="help-link">How do I reset my password?</a></li>
+                        <li><a href="#" class="help-link">Why can't I access my account?</a></li>
+                        <li><a href="#" class="help-link">How do I enable two-factor authentication?</a></li>
+                        <li><a href="#" class="help-link">What if I forgot my email?</a></li>
+                    </ul>
+                </div>
+                
+                <div class="help-card">
+                    <div class="help-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h4 class="help-card-title">Support Options</h4>
+                    <ul class="help-list">
+                        <li><a href="#" class="help-link">Contact Support Team</a></li>
+                        <li><a href="#" class="help-link">Live Chat Support</a></li>
+                        <li><a href="#" class="help-link">Email Support</a></li>
+                        <li><a href="#" class="help-link">Documentation</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileClose = document.getElementById('mobileClose');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+        
+        mobileClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+        
+        // Close mobile menu when clicking on links
+        const mobileLinks = document.querySelectorAll('.nav-mobile-link');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Quick access functions
+        function fillAdminCredentials() {
+            document.getElementById('loginEmail').value = 'admin@example.com';
+            document.getElementById('loginPassword').value = 'admin123';
+            showNotification('Admin credentials filled. Click "Sign In to Account" to continue.', 'info');
+        }
+
+        function fillUserCredentials() {
+            document.getElementById('loginEmail').value = 'test@example.com';
+            document.getElementById('loginPassword').value = 'password123';
+            showNotification('User credentials filled. Click "Sign In to Account" to continue.', 'info');
+        }
+
+        function fillPendingCredentials() {
+            document.getElementById('loginEmail').value = 'pending@example.com';
+            document.getElementById('loginPassword').value = 'password123';
+            showNotification('Pending user credentials filled. Click "Sign In to Account" to continue.', 'info');
+        }
+
+        // Notification function
+        function showNotification(message, type = 'info') {
+            const container = document.getElementById('notificationContainer');
+            const notification = document.createElement('div');
+            
+            const icon = type === 'success' ? 'fa-check-circle' : 
+                         type === 'error' ? 'fa-exclamation-circle' : 
+                         'fa-info-circle';
+            
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="fas ${icon}"></i>
+                </div>
+                <div class="flex-1">
+                    <p class="font-medium">${message}</p>
+                </div>
+                <button class="notification-close" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            container.appendChild(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideInRight 0.3s ease-out reverse';
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -342,7 +342,7 @@ export function issueAuthCookies(reply: FastifyReply, token: string, refreshToke
   reply.setCookie('token', token, {
     httpOnly: true,
     secure: isProd,
-    sameSite: 'strict',
+    sameSite: isProd ? 'none' : 'lax',
     path: '/',
     maxAge: env.jwtExpiryDays * 24 * 60 * 60
   })
@@ -352,7 +352,7 @@ export function issueAuthCookies(reply: FastifyReply, token: string, refreshToke
     reply.setCookie('refresh_token', refreshToken, {
       httpOnly: true,
       secure: isProd,
-      sameSite: 'strict',
+      sameSite: isProd ? 'none' : 'lax',
       path: '/api/auth/refresh', // only sent to the refresh endpoint
       maxAge: config.session.refreshTokenDays * 24 * 60 * 60
     })
@@ -361,7 +361,7 @@ export function issueAuthCookies(reply: FastifyReply, token: string, refreshToke
   reply.setCookie(CSRF_COOKIE, csrfToken, {
     httpOnly: false,
     secure: isProd,
-    sameSite: 'strict',
+    sameSite: isProd ? 'none' : 'lax',
     path: '/',
     maxAge: env.jwtExpiryDays * 24 * 60 * 60
   })

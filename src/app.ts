@@ -53,7 +53,7 @@ export async function buildApp(): Promise<FastifyInstance> {
     parseOptions: {
       httpOnly: true,
       secure: env.isProd,
-      sameSite: 'strict'
+      sameSite: env.isProd ? 'none' : 'lax'
     }
   })
 

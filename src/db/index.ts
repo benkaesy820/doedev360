@@ -166,11 +166,10 @@ function createDbClient(): Client {
     if (!env.authToken) {
       throw new Error('TURSO_AUTH_TOKEN is required for remote database')
     }
-    // For remote (HTTP-based) Turso, PRAGMA statements don't persist between requests.
-    // Append foreign_keys=ON as a URL query param so libsql sets it per connection.
-    const remoteUrl = url.includes('?') ? `${url}&foreign_keys=on` : `${url}?foreign_keys=on`
+    // Remote Turso uses HTTP-based transport — URL query params like foreign_keys=on
+    // are NOT supported. The PRAGMA is applied via applyBootPragmas instead.
     rawClient = createClient({
-      url: remoteUrl,
+      url,
       authToken: env.authToken,
     })
     logger.info({ url: url.substring(0, 20) + '...' }, 'Database: remote Turso mode')

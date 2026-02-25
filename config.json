@@ -1,0 +1,138 @@
+{
+    "brand": {
+        "siteName": "Ev Business",
+        "tagline": "",
+        "company": "Ev Network",
+        "supportEmail": "ev@gmail.com",
+        "logoUrl": "",
+        "primaryColor": "#000000"
+    },
+    "limits": {
+        "message": {
+            "textMaxLength": 5,
+            "teamTextMaxLength": 50,
+            "perMinute": 20,
+            "perHour": 200
+        },
+        "media": {
+            "maxSizeImage": 5242880,
+            "maxSizeVideo": 52428800,
+            "maxSizeDocument": 10485760,
+            "perDay": 50
+        },
+        "upload": {
+            "presignedUrlTTL": 300,
+            "confirmTimeout": 600
+        }
+    },
+    "rateLimit": {
+        "login": {
+            "maxAttempts": 5,
+            "windowMinutes": 1,
+            "lockoutMinutes": 30
+        },
+        "passwordReset": {
+            "maxAttempts": 5,
+            "windowMinutes": 15
+        },
+        "passwordChange": {
+            "maxAttempts": 5,
+            "windowMinutes": 60
+        },
+        "registration": {
+            "maxAttempts": 3,
+            "windowHours": 24
+        },
+        "api": {
+            "requestsPerMinute": 60
+        },
+        "stream": {
+            "maxRequests": 30,
+            "windowMs": 60000,
+            "maxEntries": 10000,
+            "cleanupIntervalMs": 60000
+        }
+    },
+    "session": {
+        "maxDevices": 5,
+        "passwordResetTokenMinutes": 30,
+        "refreshTokenDays": 90,
+        "accessTokenDays": 30
+    },
+    "email": {
+        "notification": {
+            "debounceSeconds": 120,
+            "maxDelaySeconds": 300,
+            "minOfflineSeconds": 300,
+            "maxRetries": 3,
+            "retryBackoffMs": 1000
+        }
+    },
+    "storage": {
+        "timeoutMs": 8000,
+        "circuitBreaker": {
+            "failureThreshold": 5,
+            "recoveryTimeoutMs": 30000
+        },
+        "retry": {
+            "maxAttempts": 3,
+            "baseDelayMs": 1000
+        }
+    },
+    "socket": {
+        "authWindowMs": 8000,
+        "authMaxAttempts": 10,
+        "pingTimeoutMs": 60000,
+        "pingIntervalMs": 25000,
+        "maxTimeoutMs": 300000,
+        "maxConnectionsPerIp": 10,
+        "connectionWindowMs": 60000
+    },
+    "presence": {
+        "typingIndicatorTTL": 5000,
+        "awayThresholdMs": 300000,
+        "offlineThresholdMs": 900000,
+        "cleanupIntervalMs": 60000,
+        "sessionDbCleanupIntervalMs": 600000,
+        "socketRateCleanupIntervalMs": 60000
+    },
+    "allowedMimeTypes": {
+        "image": [
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+            "image/gif"
+        ],
+        "video": [
+            "video/mp4",
+            "video/webm"
+        ],
+        "document": [
+            "application/pdf",
+            "application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        ]
+    },
+    "features": {
+        "userRegistration": true,
+        "mediaUpload": true,
+        "messageDelete": true,
+        "messageDeleteTimeLimit": 300
+    },
+    "server": {
+        "maxBodySize": 104857600,
+        "requestTimeoutMs": 8000,
+        "shutdownTimeoutMs": 10000,
+        "statsLogIntervalMs": 60000
+    },
+    "subsidiaries": [],
+    "cache": {
+        "maxUserCacheSize": 10000,
+        "maxTypingIndicators": 1000,
+        "maxActiveUploads": 500,
+        "maxSocketRateLimiters": 10000,
+        "maxEmailQueueSize": 1000,
+        "maxRateLimitEntries": 10000,
+        "rateLimitCleanupIntervalMs": 60000
+    }
+}

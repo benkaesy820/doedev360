@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS `announcement_comments`;
+DROP TABLE IF EXISTS `announcement_reactions`;
+DROP TABLE IF EXISTS `announcement_votes`;
+DROP TABLE IF EXISTS `announcements`;
+DROP TABLE IF EXISTS `audit_logs`;
+DROP TABLE IF EXISTS `conversations`;
+DROP TABLE IF EXISTS `direct_messages`;
+DROP TABLE IF EXISTS `internal_messages`;
+DROP TABLE IF EXISTS `media`;
+DROP TABLE IF EXISTS `message_reactions`;
+DROP TABLE IF EXISTS `messages`;
+DROP TABLE IF EXISTS `password_reset_tokens`;
+DROP TABLE IF EXISTS `refresh_tokens`;
+DROP TABLE IF EXISTS `sessions`;
+DROP TABLE IF EXISTS `user_status_history`;
+DROP TABLE IF EXISTS `users`;

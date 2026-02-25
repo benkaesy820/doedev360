@@ -1,0 +1,11 @@
+node_modules
+dist
+.env
+.env.local
+*.log
+npm-debug.log*
+drizzle
+scripts
+*.md
+.git
+.gitignore

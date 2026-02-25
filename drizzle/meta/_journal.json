@@ -1,0 +1,41 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1771531661148,
+      "tag": "0000_light_arachne",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1771539598443,
+      "tag": "0001_careless_chat",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1771623748465,
+      "tag": "0002_worthless_moonstone",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1771700000000,
+      "tag": "0003_admin_unread_count",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1771942612831,
+      "tag": "0004_loving_wallop",
+      "breakpoints": true
+    }
+  ]
+}

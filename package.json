@@ -11,7 +11,9 @@
     "smoke": "node --import tsx scripts/smoke.ts",
     "seed:admin": "node --import tsx scripts/seed-admin.ts",
     "db:generate": "drizzle-kit generate",
-    "db:push": "drizzle-kit push",
+    "db:push:local": "cross-env TURSO_DATABASE_URL=file:./local.db drizzle-kit push",
+    "db:push:remote": "drizzle-kit push",
+    "db:push": "npm run db:push:remote && npm run db:push:local",
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
@@ -21,6 +23,7 @@
     "@fastify/cors": "^11.2.0",
     "@libsql/client": "^0.17.0",
     "@node-rs/argon2": "^1.8.2",
+    "@tursodatabase/sync": "^0.4.4",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.45.1",
     "fastify": "^5.7.4",
@@ -36,6 +39,7 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^22.10.6",
     "@types/nodemailer": "^7.0.9",
+    "cross-env": "^10.1.0",
     "drizzle-kit": "^0.31.9",
     "pino-pretty": "^11.0.0",
     "shx": "^0.4.0",

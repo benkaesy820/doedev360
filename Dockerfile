@@ -23,10 +23,10 @@ RUN npm ci --omit=dev
 # Copy compiled output + config.json (build script copies it to dist/)
 COPY --from=builder /app/dist ./dist
 
-EXPOSE 3000
+EXPOSE 7860
 
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
-ENV PORT=3000
+ENV PORT=7860
 
 CMD ["node", "dist/src/index.js"]

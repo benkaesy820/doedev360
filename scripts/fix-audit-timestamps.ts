@@ -17,7 +17,7 @@ if (!url) {
 
 const client = createClient({
     url,
-    authToken: process.env.TURSO_AUTH_TOKEN,
+    ...(process.env.TURSO_AUTH_TOKEN ? { authToken: process.env.TURSO_AUTH_TOKEN } : {}),
 })
 
 // Any created_at > 9999999999 (year ~2286 in seconds) is a millisecond timestamp
@@ -26,7 +26,7 @@ const THRESHOLD = 9_999_999_999
 const count = await client.execute(
     `SELECT COUNT(*) as c FROM audit_logs WHERE created_at > ${THRESHOLD}`
 )
-const badCount = Number((count.rows[0] as { c: number }).c)
+const badCount = Number((count.rows[0] as unknown as { c: number }).c)
 console.log(`Found ${badCount} rows with bad timestamps`)
 
 if (badCount === 0) {
@@ -45,7 +45,7 @@ console.log(`✅ Fixed ${result.rowsAffected} rows`)
 const verify = await client.execute(
     `SELECT COUNT(*) as c FROM audit_logs WHERE created_at > ${THRESHOLD}`
 )
-const remaining = Number((verify.rows[0] as { c: number }).c)
+const remaining = Number((verify.rows[0] as unknown as { c: number }).c)
 console.log(`Remaining bad rows: ${remaining}`)
 
 await client.close()

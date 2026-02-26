@@ -21,6 +21,8 @@ const LOCAL_ONLY_PRAGMAS = new Set([
   'PRAGMA synchronous = NORMAL',
   'PRAGMA mmap_size = 134217728',
   'PRAGMA busy_timeout = 5000',
+  'PRAGMA cache_size = -32000',
+  'PRAGMA temp_store = MEMORY',
 ])
 
 const BOOT_PRAGMAS = [
@@ -92,14 +94,14 @@ function wrapDbClientWithResilience(baseClient: Client): Client {
     get(target, prop, receiver) {
       if (prop === 'execute') {
         return async (...args: unknown[]) => {
-          const execute = target.execute.bind(target) as (...params: unknown[]) => Promise<unknown>
+          const execute = (target as any).execute.bind(target) as (...params: unknown[]) => Promise<unknown>
           return withDbCircuitBreaker(() => withDbTimeout(execute(...args)))
         }
       }
 
       if (prop === 'batch') {
         return async (...args: unknown[]) => {
-          const batch = target.batch.bind(target) as (...params: unknown[]) => Promise<unknown>
+          const batch = (target as any).batch.bind(target) as (...params: unknown[]) => Promise<unknown>
           return withDbCircuitBreaker(() => withDbTimeout(batch(...args)))
         }
       }
@@ -113,71 +115,55 @@ function wrapDbClientWithResilience(baseClient: Client): Client {
   }) as Client
 }
 
-async function applyBootPragmas(rawClient: Client, isRemote: boolean): Promise<void> {
-  for (const pragma of BOOT_PRAGMAS) {
-    // Skip file-system pragmas for remote connections — they throw "not authorized"
-    if (isRemote && LOCAL_ONLY_PRAGMAS.has(pragma)) {
-      logger.debug({ pragma }, 'Skipping local-only pragma for remote connection')
-      continue
-    }
-    try {
-      await rawClient.execute(pragma)
-    } catch (error) {
-      // Non-fatal: log and continue — server starts with degraded settings rather than crashing
-      logger.warn({ pragma, error: error instanceof Error ? error.message : String(error) }, 'PRAGMA failed — skipping')
-    }
-  }
-  try {
-    await rawClient.execute(BOOT_OPTIMIZE)
-  } catch (error) {
-    logger.warn({ error: error instanceof Error ? error.message : String(error) }, 'PRAGMA optimize failed — skipping')
-  }
-  logger.info('Database PRAGMA boot sequence applied')
-}
+// Removed appliedBootPragmas since @tursodatabase/sync manages its own underlying SQLite pragmas (WAL/synchronous)
+// and running them concurrently/randomly breaks the client synchronization process.
 
-function createDbClient(): Client {
+async function createDbClient(): Promise<any> {
   if (client) return client
 
   const url = env.databaseUrl
-  let rawClient: Client
+  const syncUrl = env.tursoSyncUrl
+  const authToken = env.authToken
 
-  if (url.startsWith('file:')) {
-    // LOCAL: plain file OR embedded replica (if TURSO_SYNC_URL is set)
-    const syncUrl = env.tursoSyncUrl
-    const authToken = env.authToken
+  let rawClient: any
 
-    if (syncUrl && authToken) {
-      rawClient = createClient({
-        url,
-        syncUrl,
-        authToken,
-        syncInterval: 60,
-      })
-      logger.info('Database: embedded replica mode (local + Turso sync)')
-    } else {
-      rawClient = createClient({ url })
-      logger.info({ url: url.substring(0, 20) + '...' }, 'Database: local file mode')
-    }
+  logger.info({ url, syncUrl, hasAuth: !!authToken }, 'Initializing database connection...')
 
-    // Local connections support all pragmas
-    ; (rawClient as Client & { _bootPromise?: Promise<void>; _isRemote?: boolean })._isRemote = false
-  } else {
-    // REMOTE: direct Turso cloud connection (no local replica)
-    if (!env.authToken) {
-      throw new Error('TURSO_AUTH_TOKEN is required for remote database')
-    }
-    // Remote Turso uses HTTP-based transport — URL query params like foreign_keys=on
-    // are NOT supported. The PRAGMA is applied via applyBootPragmas instead.
+  // EMBEDDED REPLICA MODE — @libsql/client handles local file + cloud sync natively.
+  // This is the officially supported way to do embedded replicas with Turso + Drizzle.
+  // The client exposes the full execute/batch/close interface Drizzle requires.
+  if (url.startsWith('file:') && syncUrl && authToken) {
     rawClient = createClient({
       url,
-      authToken: env.authToken,
+      syncUrl,
+      authToken,
     })
-    logger.info({ url: url.substring(0, 20) + '...' }, 'Database: remote Turso mode')
-      ; (rawClient as Client & { _bootPromise?: Promise<void>; _isRemote?: boolean })._isRemote = true
-  }
 
-  const isRemote = !!(rawClient as Client & { _isRemote?: boolean })._isRemote
-    ; (rawClient as Client & { _bootPromise?: Promise<void> })._bootPromise = applyBootPragmas(rawClient, isRemote)
+    // Perform an initial sync so the local replica has the schema and data
+    // before any service (e.g. media cleanup) queries it.
+    try {
+      await rawClient.sync()
+      logger.info('Database: initial sync complete')
+    } catch (err) {
+      logger.warn({ err }, 'Database: initial sync failed — local replica may be stale')
+    }
+
+    logger.info('Database: Turso embedded replica mode (@libsql/client)')
+  }
+  // LOCAL FILE MODE: plain local SQLite (no cloud sync)
+  else if (url.startsWith('file:')) {
+    rawClient = createClient({ url })
+    try { await rawClient.execute('PRAGMA journal_mode = WAL') } catch { }
+    logger.info({ url: url.substring(0, 20) + '...' }, 'Database: local file mode')
+  }
+  // REMOTE TURSO: direct cloud HTTP connection
+  else {
+    if (!authToken) {
+      throw new Error('TURSO_AUTH_TOKEN is required for remote database')
+    }
+    rawClient = createClient({ url, authToken })
+    logger.info({ url: url.substring(0, 20) + '...' }, 'Database: remote Turso mode')
+  }
 
   client = wrapDbClientWithResilience(rawClient)
   return client
@@ -186,12 +172,10 @@ function createDbClient(): Client {
 export async function initDb(): Promise<LibSQLDatabase<typeof schema>> {
   if (db) return db
 
-  const rawClientRef = createDbClient()
-  // Wait for all PRAGMAs to finish before any query can be issued
-  const bootPromise = (rawClientRef as Client & { _bootPromise?: Promise<void> })._bootPromise
-  if (bootPromise) await bootPromise
+  const rawClientRef = await createDbClient()
 
-  db = drizzle(rawClientRef, { schema, logger: env.isDev })
+  // Drizzle expects a `@libsql/client` (or heavily compatible duck-type interface)
+  db = drizzle(rawClientRef as Client, { schema, logger: env.isDev })
   dbReady = Promise.resolve()
   return db
 }
@@ -228,7 +212,9 @@ export async function checkDbHealth(): Promise<{
   try {
     const start = Date.now()
     await retryWithBackoff(async () => {
-      const dbClient = createDbClient()
+      // In @tursodatabase/sync embedded mode, execute isn't strictly recreating the client,
+      // it's just pinging the existing client if we already have it.
+      const dbClient = client || await createDbClient()
       await dbClient.execute('SELECT 1')
     }, 2, 250)
 

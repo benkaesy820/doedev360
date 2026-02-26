@@ -25,7 +25,10 @@ if (!DATABASE_URL) {
 }
 
 // ── DB ——————————————————————————————————————————————————————
-const client = createClient({ url: DATABASE_URL, authToken: AUTH_TOKEN })
+const client = createClient({
+    url: DATABASE_URL,
+    ...(AUTH_TOKEN ? { authToken: AUTH_TOKEN } : {})
+})
 const db = drizzle(client, { schema })
 
 // ── Seed ————————————————————————————————————————————————————

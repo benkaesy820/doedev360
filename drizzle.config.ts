@@ -14,5 +14,6 @@ export default defineConfig({
   dbCredentials: {
     url: databaseUrl,
     ...(isLocal ? {} : { authToken: authToken ?? '' })
-  }
+  },
+  tablesFilter: ['!turso_*']
 })

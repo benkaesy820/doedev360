@@ -19,14 +19,18 @@ export class MediaCleanupService {
     const config = getConfig()
     const intervalMs = config.presence.sessionDbCleanupIntervalMs
 
-    this.runCleanup().catch((error) => {
-      logger.error({ error }, 'Initial media cleanup run failed')
-      emitToAdmins('cleanup:error', {
-        service: 'media',
-        error: error instanceof Error ? error.message : 'Unknown error',
-        timestamp: Date.now()
+    // Delay the first run to avoid racing with the initial DB sync pull.
+    // The interval-based follow-up runs are unaffected by this delay.
+    setTimeout(() => {
+      this.runCleanup().catch((error) => {
+        logger.error({ error }, 'Initial media cleanup run failed')
+        emitToAdmins('cleanup:error', {
+          service: 'media',
+          error: error instanceof Error ? error.message : 'Unknown error',
+          timestamp: Date.now()
+        })
       })
-    })
+    }, 5_000)
 
     this.cleanupInterval = setInterval(async () => {
       try {

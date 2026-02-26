@@ -95,6 +95,14 @@ const envSchema = z.object({
         path: ['TURSO_AUTH_TOKEN']
       })
     }
+
+    if (data.TURSO_DATABASE_URL?.startsWith('file:') && data.TURSO_SYNC_URL && !data.TURSO_AUTH_TOKEN) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'TURSO_AUTH_TOKEN is required for embedded replica mode',
+        path: ['TURSO_AUTH_TOKEN']
+      })
+    }
   }
 })
 

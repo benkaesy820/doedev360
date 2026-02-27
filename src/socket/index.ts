@@ -321,7 +321,11 @@ async function authenticateSocket(socket: Socket): Promise<void> {
   }
 
   try {
-    const token = getSocketAuthTokenFromCookie(socket)
+    let token = getSocketAuthTokenFromCookie(socket)
+
+    if (!token && socket.handshake.auth?.token) {
+      token = socket.handshake.auth.token
+    }
 
     if (!token) {
       throw { message: 'No token provided', code: 'NO_TOKEN' } as AuthError

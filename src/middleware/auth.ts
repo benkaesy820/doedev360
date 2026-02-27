@@ -186,7 +186,11 @@ export async function authenticateRequest(
   request.requestId = generateRequestId()
   reply.header('x-request-id', request.requestId)
 
-  const token = request.cookies.token
+  let token = request.cookies.token
+  if (!token && request.headers.authorization?.startsWith('Bearer ')) {
+    token = request.headers.authorization.slice(7)
+  }
+
   if (!token) {
     return
   }

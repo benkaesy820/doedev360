@@ -599,9 +599,12 @@ export async function authRoutes(fastify: FastifyInstance) {
     const authUser = requireUser(request, reply)
     if (!authUser) return
 
+    const csrfToken = request.cookies['_csrf']
+
     const cached = getUserFromCache(authUser.id)
     if (cached) {
       return sendOk(reply, {
+        csrfToken,
         user: {
           id: authUser.id,
           email: authUser.email,
@@ -632,7 +635,7 @@ export async function authRoutes(fastify: FastifyInstance) {
       return sendError(reply, 404, 'NOT_FOUND', 'User not found')
     }
 
-    return sendOk(reply, { user })
+    return sendOk(reply, { csrfToken, user })
   })
 
   fastify.get('/sessions', { preHandler: requireApprovedUser }, async (request, reply) => {
